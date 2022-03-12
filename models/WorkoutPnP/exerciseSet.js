@@ -25,6 +25,7 @@ const exerciseSetSchema = new Schema({
   },
   performedWeight: {
     type: Number,
+    
   },
   performedReps: {
     type: Number,

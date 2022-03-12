@@ -64,6 +64,25 @@ router.post("/create",async(req,res)=>{
     }
 })
 
+//UPDATE (LVL-2B)
+router.put("/update/:id",async(req,res)=>{
+    try{
+        const filter={_id:req.params.id};
+   const updatedSession= await Session.findOne(filter);
+  
+    updatedSession.workout.exercises[0].exerciseSets[0]["performedReps"]=req.body.performedReps;
+    await updatedSession.save();
+    updatedSession.workout.exercises[0].exerciseSets[0].performedWeight=req.body.performedWeights;
+    const result=await updatedSession.save();
+    console.log(result);
+    res.send(result);
+
+    }
+    catch(e){
+        res.status(500).send(e);
+    }
+});
+
 router.get("/:id",async(req,res)=>{
    const getSession=await Session.findById(req.params.id).populate("trainerRef").populate("userRef").populate("trainerRef");
    res.status(200).send(getSession);
